@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('bill_no');
             $table->string('year');
             $table->text('summary');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->default(1)->constrained()->onDelete('cascade');
+            $table->string('status')->default('bill');
 
             
             // $table->string('file_upload');

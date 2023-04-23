@@ -11,42 +11,42 @@
 
             <div>
                 <x-label for="name" value="{{ __('First Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus autocomplete="name" />
             </div>
 
             <div>
                 <x-label for="middlename" value="{{ __('Middle Name') }}" />
-                <x-input id="middlename" class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename')" required autofocus autocomplete="middlename" />
+                <x-input id="middlename" class="block mt-1 w-full" type="text" name="middlename" :value="old('middlename')" autofocus autocomplete="middlename" />
             </div>
             <div>
                 <x-label for="las tname" value="{{ __('Last Name') }}" />
-                <x-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" required autofocus autocomplete="lastname" />
+                <x-input id="lastname" class="block mt-1 w-full" type="text" name="lastname" :value="old('lastname')" autofocus autocomplete="lastname" />
             </div>
             <div>
                 <x-label for="extension" value="{{ __('Extension') }}" />
-                <x-input id="extension" class="block mt-1 w-full" type="text" name="extension" :value="old('extension')" required autofocus autocomplete="extension" />
+                <x-input id="extension" class="block mt-1 w-full" type="text" name="extension" :value="old('extension')" autofocus autocomplete="extension" />
             </div>
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="email" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autocomplete="email" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" autocomplete="new-password" />
             </div>
 
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" autocomplete="new-password" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
                     <x-label for="terms">
                         <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
+                            <x-checkbox name="terms" id="terms" />
 
                             <div class="ml-2">
                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [

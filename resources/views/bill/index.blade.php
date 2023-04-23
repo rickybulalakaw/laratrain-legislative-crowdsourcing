@@ -9,22 +9,22 @@
 
         @if($bills->count())
          @foreach($bills as $bill)
-        <div class="card m-6 p-1 bg-sky-300 rounded">
-            <div class="card-header m-6">{{$bill->title}}</div>
+        <div class="card m-6 px-1 py-3 bg-sky-300 rounded">
+            <div class="card-header m-6 "><h3 class="text-3xl font-bold ">{{$bill->title}}</h3></div>
+            <hr>
             <div class="card-body m-6">
-                <p class="mb-3">Bill Number: {{$bill->bill_no}}</p>
-                <p class="mb-3">Year Filed: {{$bill->year}}</p>
-                <p class="mb-3">
+                <p class="mb-3 text-lg">Bill Number: {{$bill->bill_no}}</p>
+                <p class="mb-3 text-lg">Year Filed: {{$bill->year}}</p>
+                <p class="mb-3 text-lg">
                 {{$bill->summary}}
                 </p>
-                <p class="mb-3">Filed by: {{ $bill->user->name }} {{ $bill->user->lastname }}</p>
-                <p>Posted {{ $bill->created_at->diffForHumans() }}</p>
+                <p class="mb-3 text-sm">Filed by: {{ $bill->user->name }} {{ $bill->user->lastname }} | Posted {{ $bill->created_at->diffForHumans() }}</p>
             </div>
-            @auth
-            <div class="mb-3 mx-3">
-                <a href="" class="bg-blue-500 text-white px-3 py-3 rounded font-medium inline">Read and Discuss</a>
+            <div class="mb-3 mx-6">
+                
+                <a href="{{ route('show-bill', $bill->id) }}" class="bg-blue-100 text-gray-700  px-6 py-3 rounded font-medium inline">@auth Read and Discuss @endauth @guest Read @endguest</a>
+               
             </div>
-            @endauth
         </div>
          @endforeach
 

@@ -27,7 +27,7 @@ services:
             - meilisearch
             - mailpit
             - selenium
-            - adminer
+            - phpmyadmin
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -99,24 +99,24 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
-    # phpmyadmin:
-    #     image: 'phpmyadmin:latest'
-    #     ports:
-    #         - 8080:80
-    #     networks:
-    #         - sail
-    #     environment:
-    #         - PMA_ARBITRARY=1
-    adminer:
-        image: adminer
-        restart: always
+    phpmyadmin:
+        image: 'phpmyadmin:latest'
         ports:
-            - 8080:8080
+            - 8080:80
         networks:
             - sail
-        environment: 
-            ADMINER_DEFAULT_SERVER: mysql
-            ADMINER_DESIGN: galkaev
+        environment:
+            - PMA_ARBITRARY=1
+    # adminer:
+    #     image: adminer
+    #     restart: always
+    #     ports:
+    #         - 8080:8080
+    #     networks:
+    #         - sail
+    #     environment: 
+    #         ADMINER_DEFAULT_SERVER: mysql
+    #         ADMINER_DESIGN: galkaev
 
     # db:
     #     image: mysql:5.6
