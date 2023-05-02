@@ -20,6 +20,7 @@
                 <p class="mb-3 text-lg">65 Likes | 22 Unlikes</p>
 
                 <p class="text-sm mb-3">Posted {{ $bill->created_at->diffForHumans() }} </p>
+                @auth
                 <div class="flex items-center">
                     <form action="/like" method="post">
                         @csrf
@@ -41,6 +42,7 @@
 
                     
                 </div>
+                @endauth
             </div>
 
             @auth

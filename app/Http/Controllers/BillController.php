@@ -19,7 +19,8 @@ class BillController extends Controller
     {
         // dd('abc');
         // dd(auth()->user()->bills);
-        $bills = Bill::paginate(5);
+        // $bills = Bill::paginate(5);
+        $bills = Bill::with(['user'])->paginate(5);
         return view('bill.index',[
             'bills' => $bills
         ]);

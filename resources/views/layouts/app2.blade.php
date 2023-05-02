@@ -30,13 +30,14 @@
             </li>
             
             @auth
-            <li>
+            <!-- <li>
                 <a href="" class="p-3">Dashboard</a>
-            </li>
-            @endauth
+            </li> -->
+
             <li>
                 <a href="{{ route('add-bill') }}" class="p-3">Upload</a>
             </li>
+            @endauth
         </ul>
 
         <ul class="flex items-center">
