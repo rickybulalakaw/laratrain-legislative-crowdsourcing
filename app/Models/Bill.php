@@ -17,7 +17,10 @@ class Bill extends Model
         'bill_no',
         'year',
         'summary',
-        'user_id'
+        'user_id',
+        'url',
+        'filename'
+
     ]; 
 
     public function user()

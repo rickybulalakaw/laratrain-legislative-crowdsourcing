@@ -21,7 +21,7 @@ class BillFactory extends Factory
             'year' => $this->faker->numberBetween(1980, 2025),
             'bill_no' => $this->faker->numberBetween(1999, 100000),
             'summary' => $this->faker->paragraph(8),
-            'user_id' => 1,
+            'user_id' => $this->faker->numberBetween(1,31),
         ];
     }
 }

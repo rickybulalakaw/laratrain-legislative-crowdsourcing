@@ -37,8 +37,9 @@
                     </form>
 
                     <!-- This should be available only to owner of the posted bill  -->
-                        <a href="" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Edit Details</a>
-                        <a href="" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Upload bill</a>
+                        <a href="" class="bg-blue-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Edit Details</a>
+                        <!-- <a href="" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Upload bill</a> -->
+                        <a href="{{ route('download-bill', $bill->id) }}" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Download bill</a>
 
                     
                 </div>

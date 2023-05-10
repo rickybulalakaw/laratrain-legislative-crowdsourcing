@@ -23,7 +23,7 @@
     <nav class="p-6 bg-white flex justify-between">
         <ul class="flex items-center">
             <li>
-                <a href="{{ route('bills') }}" class="p-3">Home</a>
+                <a href="{{ route('home') }}" class="p-3">Home</a>
             </li>
             <li>
                 <a href="" class="p-3">Search</a>

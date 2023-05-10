@@ -5,7 +5,7 @@
     <div class="bg-white p-6 rounded-lg w-8/12 m-6">
 
         <h1 class="text-4xl  text-lime-900 mb-6">{{ config('app.name', 'Laravel') }}</h1> 
-        <form action="{{ route('add-bill') }}" method="post">
+        <form action="{{ route('add-bill') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <!-- <div class="mb-4">
@@ -49,6 +49,16 @@
                 <label for="summary">Summary of Draft Bill</label>
                 <textarea  name="summary" class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('summary') border-red-500 @enderror" placeholder="Enter brief summary">
                 </textarea>
+                @error('summary')
+                    <div class="text-red-500 mt-2 text-sm">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="summary">Upload Bill</label>
+                <input type="file" name="filename" id="filename" class="bg-gray-100 border-2 w-full p-4 rounded-lg @error('filename') border-red-500 @enderror" >
                 @error('summary')
                     <div class="text-red-500 mt-2 text-sm">
                         {{ $message }}
