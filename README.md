@@ -11,6 +11,10 @@
 
 This application is developed as a model reference for introductory training on Laravel, integrating Laravel's first-party packages such as Sail, Jetstream (Fortify and Livewire).
 
+## Instructions for Deployment 
+
+This application uses Sail, which is not included in the repository. Install all the required packages first using Composer. 
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

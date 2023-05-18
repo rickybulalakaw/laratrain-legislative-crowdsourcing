@@ -22,22 +22,24 @@
                 <p class="text-sm mb-3">Posted {{ $bill->created_at->diffForHumans() }} </p>
                 @auth
                 <div class="flex items-center">
-                    <form action="/like" method="post">
+                    @if( !$bill->likedBy(auth()->user()))
+                    <form action="{{ route('like-bill', $bill->id) }} " method="post">
                         @csrf
                         <input type="hidden" name="bill_id" value="{{$bill->id}}">
-    
-                        
+                        <input type="hidden" name="like" value="liked">
                         <button type="submit" class="bg-green-500  p-3 mx-1 border-cyan-100  text-white text-lg font-semibold rounded-md ">Like</button>
                     </form>
     
-                    <form action="/unlike" method="post">
+                    <form action="{{ route('like-bill', $bill->id) }}" method="post">
                         @csrf
                         <input type="hidden" name="bill_id" value="{{$bill->id}}">
+                        <input type="hidden" name="like" value="disliked">
                         <button type="submit" class="bg-red-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Unlike</button>
                     </form>
+                    @endif
 
                     <!-- This should be available only to owner of the posted bill  -->
-                        <a href="" class="bg-blue-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Edit Details</a>
+                        <a href="{{ route('edit-bill', $bill->id) }} " class="bg-blue-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Edit Details</a>
                         <!-- <a href="" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Upload bill</a> -->
                         <a href="{{ route('download-bill', $bill->id) }}" class="bg-yellow-500 p-3 mx-1 border-red-50 text-white text-lg font-semibold rounded-md ">Download bill</a>
 

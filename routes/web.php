@@ -4,17 +4,6 @@ use App\Http\Controllers\BillController;
 use Illuminate\Support\Facades\Route;
 
 /*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-/*
 index - show all 
 show - show one 
 create - show form to create  new 
@@ -24,13 +13,16 @@ update - save new data of edited
 destroy - delete one 
 */
 
-
+Route::delete('/delete/{bill}', [BillController::class, 'delete'])->name('delete-bill');
+Route::post('/like/{bill}', [BillController::class, 'likeBill'])->name('like-bill');
+Route::delete('/delete/{bill}', [BillController::class, 'destroy'])->name('delete-bill');
+Route::post('/download-bill/{bill}', [BillController::class, 'downloadBill'])->name('download-bill');
 Route::post('/add-comment', [BillController::class, 'addComment'])->name('add-comment');
-Route::get('/edit/{bill}', [BillController::class, 'edit'])->name('edit-bill');
-Route::post('/edit/{bill}', [BillController::class, 'update']);
+Route::get('/edit/{bill}', [BillController::class, 'edit'])->name('edit-bill')->middleware(['password.confirm']);
+Route::put('/edit/{bill}', [BillController::class, 'update']);
 
 Route::get('/show/{bill}', [BillController::class, 'show'])->name('show-bill');
-Route::get('/', [BillController::class, 'index'])->name('bills');
+Route::get('/', [BillController::class, 'index'])->name('home');
 // Route::post('/like', [BillController::class, 'store'])->name('like');
 Route::get('/add-bill', [BillController::class, 'create'])->name('add-bill');
 Route::post('/add-bill', [BillController::class, 'store']);

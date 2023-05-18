@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bill;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BillController extends Controller
@@ -37,9 +38,11 @@ class BillController extends Controller
         // function that shows one bill 
 
         // function that gets comments for one bill 
-        // $comments = Comment::with(['user'])->where('bill_id', $bill->id)->paginate(3);
+        $comments = Comment::with(['user'])->where('bill_id', $bill->id)->paginate(3);
 
-        $comments = Comment::with(['user'])->paginate(3);
+        // $comments = Comment::with(['user'])->paginate(3);
+
+
 
         // $comments->appends(['sort' => 'id']);
 
@@ -57,12 +60,6 @@ class BillController extends Controller
             'bill_id' => 'required'
         ]);
 
-        // dd($request);
-        // Bill::create(
-            
-        // );
-
-        
         // save in database 
 
         $request->user()->comments()->create([
@@ -82,15 +79,50 @@ class BillController extends Controller
     // show form to edit one bill 
     public function edit(Bill $bill)
     {
-        // dd($bill);
+        // function shows the edit form with old values
 
-        return view('bill.single', [
-            'bill' => $bill
-        ]);
+        // check first user to confirm password
+        
+        $status = [
+            ['value' => 'active', 'label' => 'Active'],
+            ['value' => 'inactive', 'label' => 'Inactive'],
+            ['value' => 'pending', 'label' => 'Pending']
+        ];
+
+        return view('bill.edit', [
+            'bill' => $bill,
+            'status' => $status
+        ]);       
+   }
+
+   public function update(Request $request, Bill $bill){
+    $updatedBill = $this->validate($request, [
+        'title' => ['required', 'max:255'],
+        'bill_no' => 'required|max:255',
+        'year' => 'required|integer|max:3000',
+        'summary' => 'required|max:1000',
+        'status' => 'required|max:10'
+    ]);
+    
+    // save into database with current user authentication 
+
+    // $request->user()->bills()->update($bill);
+
+    // update the bill record in the database
+    DB::table('bills')->where('id', $bill->id)->update($updatedBill);
+
+    // $request->user()->bills()->create($bill);
+    
+
+    return redirect()->route('show-bill', $bill->id);
+
    }
 
     public function create()
     {
+
+        // check first user to confirm password 
+
         return view('bill.add');
     }
 
@@ -115,55 +147,78 @@ class BillController extends Controller
         // save in database using Model method without user
         // Bill::create($bill);
 
+        // save uploaded file to AWS S3
+        // $path = $request->file('filename')->store('bills', 's3');
 
-        // $path = $request->file(key:'filename')->store('bills', 's3');
-        // $path = $request->file('filename')->store('bills');
-        
+        // save uploaded file to local storage
+        $path = $request->file('file')->store('bills');
 
         // save in database without uploading file 
-        $request->user()->bills()->create($bill);
+        // $request->user()->bills()->create($bill);
         
 
         // save in database with current user's id
-        // $upload = $request->user()->bills()->create([
-        //     'title' => $request->title,
-        //     'bill_no' => $request->bill_no,
-        //     'year' => $request->year,
-        //     'summary' => $request->summary,
-        //     'filename' => basename($path),
-        //     'url' => Storage::disk('s3')->url($path),
-        //     'url' => Storage::disk('')
-        // ]);
+        $upload = $request->user()->bills()->create([
+            'bill_no' => $request->bill_no,
+            'year' => $request->year,
+            'summary' => $request->summary,
+            'filename' => basename($path),
+            // 'url' => Storage::disk('s3')->url($path),
+            'url' => $path
+        ]);
 
-
-
+        
         // return to home 
         return redirect()->route('home');
-
-        // redirect()->route('bills');
-        // return back(); 
-
-        // Return details of upload 
-        // return $upload;
-
 
     }
 
     public function likeBill(Bill $bill, Request $request)
     {
-        if($bill->likedBy($request->user())){
-            return response(null, 409);
-        }
 
+        $like = $this->validate($request, [
+            'bill_id' => 'required',
+            'like' => 'required'
+        ]);
+
+        // $request->user->likes($bill)->create($like);
+
+        // save to database like linked to bill based on this user 
+        DB::table('likes')->insert([
+            'bill_id' => $like['bill_id'],
+            'user_id' => $request->user()->id,
+            'like' => $like['like']
+        ]);
+
+        return redirect()->route('show-bill', $request->bill_id);
         
 
     }
 
     public function downloadBill(Bill $bill){
 
-        return Storage::disk('s3')->response('bills/' . $bill->filename);
+        // Download the uploaded file 
+        // function for AWS S3
+        // return Storage::disk('s3')->response('bills/' . $bill->filename);
+
+        // function to download file from local storage
+        // return Storage::download('bills/' . $bill->filename);
+
+        // alternative that uses the url column 
+        return Storage::download($bill->url);
+
+    }
+
+    public function destroy(Bill $bill){
+        // function to delete bill
+        $bill->delete();
+
+        // delete the bill record in the database using Query Builder
+        // DB::table('bills')->where('id', $bill->id)->delete();
 
 
+        // redirect to index 
+        return redirect()->route('home');
     }
 
 }

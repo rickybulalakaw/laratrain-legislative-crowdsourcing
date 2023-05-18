@@ -19,7 +19,8 @@ class Bill extends Model
         'summary',
         'user_id',
         'url',
-        'filename'
+        'file',
+        'status'
 
     ]; 
 
